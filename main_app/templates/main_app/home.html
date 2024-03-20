@@ -1,0 +1,278 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Consumer Car Care</title>
+    <link rel="stylesheet" href="{% static 'main_app/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+
+        body {
+            background-color: #f8f9fa;
+        }
+
+        footer {
+            color: #798da3;
+            text-decoration: none;
+        }
+        footer a {
+            text-decoration: none;
+            color: #798da3;
+        }
+
+        .nav-item.active .nav-link :not(.nav-link img) {
+            background-color: blue;
+            color: white;
+        }
+
+        .nav-link img {
+            margin-left: -80px;
+            margin-bottom: -8px;
+            margin-top: -10px;
+            padding-left: 15px;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .bg-custom-color {
+        background-color: #dadadc;
+        }
+
+        .large-logo {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 125px;
+            margin-bottom: 75px;
+        }
+
+        .jumbotron {
+            background-color: #e9ecef;
+            margin-left: 75px;
+            margin-right: 75px;
+            padding: 25px 25px 25px 25px;
+        }
+
+        .carousel {
+            margin: 75px;
+        }
+
+        .mr-3 {
+            margin-right: 10px;
+        }
+
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-custom-color">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">
+                            <img src="{% static 'main_app/images/C3_transparent_cropped.png' %}" alt="Consumer Car Care Logo" height="40">
+                        </a>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Products
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="#">1</a></li>
+                            <li><a class="dropdown-item" href="#">2</a></li>
+                            <li><a class="dropdown-item" href="#">3</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Inventory
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="#">1</a></li>
+                            <li><a class="dropdown-item" href="#">2</a></li>
+                            <li><a class="dropdown-item" href="#">3</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Sales Data
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="#">1</a></li>
+                            <li><a class="dropdown-item" href="#">2</a></li>
+                            <li><a class="dropdown-item" href="#">3</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Claims
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="#">1</a></li>
+                            <li><a class="dropdown-item" href="#">2</a></li>
+                            <li><a class="dropdown-item" href="#">3</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Warranty
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="#">1</a></li>
+                            <li><a class="dropdown-item" href="#">2</a></li>
+                            <li><a class="dropdown-item" href="#">3</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Inspections
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="#">1</a></li>
+                            <li><a class="dropdown-item" href="#">2</a></li>
+                            <li><a class="dropdown-item" href="#">3</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            Login
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <img src="{% static 'main_app/images/C3_transparent_cropped.png' %}" alt="Consumer Car Care Logo" height="250" width="250" class="large-logo">
+
+    <div class="jumbotron">
+        <h1 class="display-4">Welcome to C3</h1>
+        <p class="lead">Established in Mississauga, our company takes pride in being wholly Canadian-owned. Operating in Quebec and Ontario, we specialize in offering aftermarket enhancements tailored to personalize your recently acquired vehicle, ensuring it embodies your unique style and preferences.</p>
+        <hr class="my-4">
+        <a class="btn btn-primary btn-lg" href="#" role="button">Products</a>
+        <a class="btn btn-primary btn-lg" href="#" role="button">About Us</a>
+      </div>
+
+      <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+        <ol class="carousel-indicators">
+          <li data-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"></li>
+          <li data-target="#carouselExampleIndicators" data-bs-slide-to="1"></li>
+          <li data-target="#carouselExampleIndicators" data-bs-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img class="d-block w-100" src="{% static 'main_app/images/cool_car_1.jpg' %}" alt="First slide">
+            <div class="carousel-caption d-none d-md-block">
+                <h5>Strong and Free</h5>
+                <p>Proudly Serving Quebec and Ontario</p>
+              </div>
+          </div>
+          <div class="carousel-item">
+            <img class="d-block w-100" src="{% static 'main_app/images/cool_car_2.jpg' %}" alt="Second slide">
+            <div class="carousel-caption d-none d-md-block">
+                <h5>Only the Best</h5>
+                <p>Aftermarket Enhancements You Can Count On</p>
+              </div>
+          </div>
+          <div class="carousel-item">
+            <img class="d-block w-100" src="{% static 'main_app/images/cool_car_3.jpg' %}" alt="Third slide">
+            <div class="carousel-caption d-none d-md-block">
+                <h5>Exceptional Service</h5>
+                <p>Experience the Difference</p>
+              </div>
+          </div>
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="sr-only"></span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="sr-only"></span>
+        </a>
+      </div>
+
+
+      <footer class="bg-custom-color py-5">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-3">
+              <h5>Products</h5>
+              <ul class="list-unstyled">
+                <li><a href="#">Overview</a></li>
+                <li><a href="#">Featured Products</a></li>
+                <li><a href="#">Product Categories</a></li>
+                <li><a href="#">Reviews</a></li>
+                <li><a href="#">Pricing</a></li>
+              </ul>
+            </div>
+            <div class="col-md-3">
+              <h5>About Us</h5>
+              <ul class="list-unstyled">
+                <li><a href="#">Company Overview</a></li>
+                <li><a href="#">Missions and Values</a></li>
+                <li><a href="#">Our Team</a></li>
+                <li><a href="#">Contact Information</a></li>
+              </ul>
+            </div>
+            <div class="col-md-3">
+              <h5>Resources</h5>
+              <ul class="list-unstyled">
+                <li><a href="#">FAQs</a></li>
+                <li><a href="#">Blog</a></li>
+                <li><a href="#">Guides and Tutorials</a></li>
+                <li><a href="#">Customer Testimonials</a></li>
+              </ul>
+            </div>
+            <div class="col-md-3">
+              <h5>Support</h5>
+              <ul class="list-unstyled">
+                <li><a href="#">Help Center</a></li>
+                <li><a href="#">Contact Us</a></li>
+              </ul>
+            </div>
+          </div>
+          <hr>
+          <div class="row align-items-center">
+            <div class="col-md-6">
+              <div class="d-flex align-items-center">
+                <img src="{% static 'main_app/images/C3_transparent_cropped.png' %}" alt="Company Logo" height="60" class="mr-3">
+                <div>
+                  <p class="mb-0">&copy; 2024 Consumer Car Care. All rights reserved.</p>
+                  <p><a href="#">Terms of Service</a> | <a href="#">Privacy Policy</a></p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 text-md-right">
+              <ul class="list-inline">
+                <li class="list-inline-item"><a href="#"><i class="fab fa-facebook fa-2x"></i></a></li>
+                <li class="list-inline-item"><a href="#"><i class="fab fa-twitter fa-2x"></i></a></li>
+                <li class="list-inline-item"><a href="#"><i class="fab fa-instagram fa-2x"></i></a></li>
+                <li class="list-inline-item"><a href="#"><i class="fab fa-linkedin fa-2x"></i></a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </footer>
+
+     <script src="{% static 'main_app/js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>
