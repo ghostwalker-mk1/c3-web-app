@@ -1,0 +1,28 @@
+{% extends 'main_app/base.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+
+    .thanks-box {
+      margin-bottom: 100px;
+    }
+  
+    .form-group {
+      margin-top: 15px;
+      margin-bottom: 15px;
+    }
+
+</style>
+
+<img src="{% static 'main_app/images/C3_transparent_cropped.png' %}" alt="Consumer Car Care Logo" height="250" width="250" class="large-logo">
+
+<div class="thanks-box container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <h4>Thank you for your message!</h4>
+                    <p>We will get back to you as soon as possible.</p>
+                </div>      
+{% endblock %}
