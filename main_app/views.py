@@ -3,7 +3,9 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login
 from django.core.mail import EmailMessage
 from django.conf import settings
-# from django.contrib.auth.decorators import login_required
+from .forms import UserProfileForm
+from .models import UserProfile
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -72,3 +74,18 @@ def contact_view(request):
         return render(request, 'main_app/contact_success.html')
 
     return render(request, 'main_app/contact.html')
+
+
+@login_required
+def my_account(request):
+    user_profile, created = UserProfile.objects.get_or_create(user=request.user)
+
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST, instance=user_profile)
+        if form.is_valid():
+            form.save()
+            return redirect('my_account')
+    else:
+        form = UserProfileForm(instance=user_profile)
+
+    return render(request, 'main_app/my_account.html', {'form': form})
