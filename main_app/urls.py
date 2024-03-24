@@ -13,7 +13,9 @@ urlpatterns = [
     path('warranty/', views.my_account, name='warranty'),
     path('inspections/', views.my_account, name='inspections'),
     path('claims/', views.my_account, name='claims'),
-    path('reporting/', views.my_account, name='reporting'),
-    path('inventory/', views.my_account, name='inventory'),
+    path('sales-data/', views.my_account, name='sales_data'),
+    path('inventory/', views.inventory_view, name='inventory'),
+    path('update-inventory/<int:pk>/', views.update_inventory, name='update_inventory'),
+    path('inventory/<int:item_id>/update/', views.update_inventory, name='update_inventory'),
     path('products/', views.my_account, name='products'),
 ]

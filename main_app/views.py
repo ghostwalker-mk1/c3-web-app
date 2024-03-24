@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login
 from django.core.mail import EmailMessage
@@ -8,6 +8,8 @@ from django.contrib.auth.forms import PasswordChangeForm
 from .models import UserProfile
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from .forms import InventoryForm
+from .models import Inventory
 class ChangePasswordForm(PasswordChangeForm):
     pass
 
@@ -46,10 +48,6 @@ def register_view(request):
 def home_view(request):
     return render(request, 'main_app/home.html')
 
-from django.shortcuts import render
-from django.core.mail import EmailMessage
-from django.conf import settings
-
 def contact_view(request):
     if request.method == 'POST':
         name = request.POST.get('name')
@@ -82,7 +80,7 @@ def contact_view(request):
 
 @login_required
 def my_account(request):
-    user_profile = UserProfile.objects.get(user=request.user)
+    user_profile, created = UserProfile.objects.get_or_create(user=request.user)
 
     if request.method == 'POST':
         profile_form = UserProfileForm(request.POST, instance=user_profile)
@@ -106,3 +104,31 @@ def my_account(request):
         'profile_form': profile_form,
         'password_form': password_form,
     })
+
+def inventory_view(request):
+    inventory_items = Inventory.objects.all()
+    form = InventoryForm()
+
+    if request.method == 'POST':
+        form = InventoryForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('inventory')
+
+    return render(request, 'main_app/inventory.html', {'inventory_items': inventory_items, 'form': form})
+
+def update_inventory(request, item_id):
+    item = get_object_or_404(Inventory, id=item_id)
+    if request.method == 'POST':
+        form = InventoryForm(request.POST, instance=item)
+        if form.is_valid():
+            form.save()
+            return redirect('inventory')
+    else:
+        form = InventoryForm(instance=item)
+    
+    context = {
+        'form': form,
+        'item': item,
+    }
+    return render(request, 'main_app/edit_inventory.html', context)
