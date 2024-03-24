@@ -4,8 +4,12 @@ from django.contrib.auth import authenticate, login
 from django.core.mail import EmailMessage
 from django.conf import settings
 from .forms import UserProfileForm
+from django.contrib.auth.forms import PasswordChangeForm
 from .models import UserProfile
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+class ChangePasswordForm(PasswordChangeForm):
+    pass
 
 # Create your views here.
 
@@ -78,14 +82,27 @@ def contact_view(request):
 
 @login_required
 def my_account(request):
-    user_profile, created = UserProfile.objects.get_or_create(user=request.user)
+    user_profile = UserProfile.objects.get(user=request.user)
 
     if request.method == 'POST':
-        form = UserProfileForm(request.POST, instance=user_profile)
-        if form.is_valid():
-            form.save()
-            return redirect('my_account')
-    else:
-        form = UserProfileForm(instance=user_profile)
+        profile_form = UserProfileForm(request.POST, instance=user_profile)
+        password_form = ChangePasswordForm(request.user, request.POST)
 
-    return render(request, 'main_app/my_account.html', {'form': form})
+        if 'change_password' in request.POST:
+            if password_form.is_valid():
+                user = password_form.save()
+                messages.success(request, 'Your password was successfully updated!')
+                return redirect('my_account')
+        elif 'update_profile' in request.POST:
+            if profile_form.is_valid():
+                profile_form.save()
+                messages.success(request, 'Your profile was successfully updated!')
+                return redirect('my_account')
+    else:
+        profile_form = UserProfileForm(instance=user_profile)
+        password_form = ChangePasswordForm(request.user)
+
+    return render(request, 'main_app/my_account.html', {
+        'profile_form': profile_form,
+        'password_form': password_form,
+    })
