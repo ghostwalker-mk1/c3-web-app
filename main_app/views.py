@@ -148,18 +148,20 @@ def sales_view(request):
     if request.method == 'POST':
         sale_form = SaleForm(request.POST)
         if sale_form.is_valid():
-            print(sale_form.cleaned_data)
+            # print(sale_form.cleaned_data)
             sale = sale_form.save()
+            # print(sale)
             return redirect('add_sale_items', sale_id=sale.id)
     else:
         sale_form = SaleForm()
 
     sales = Sale.objects.all()
+    # print(sales)
     context = {
         'sale_form': sale_form,
         'sales': sales,
     }
-    print(context)
+    # print(context)
     return render(request, 'main_app/sales_data.html', context)
 
 @login_required
