@@ -1,0 +1,26 @@
+{% extends 'main_app/base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Delete Sale</h4>
+                </div>
+                <div class="card-body">
+                    <p>Are you sure you want to delete the following sale?</p>
+                    <p>Customer Name: {{ sale.customer_name }}</p>
+                    <p>Dealership Details: {{ sale.dealership_details }}</p>
+                    <p>Sales Rep: {{ sale.sales_rep_name }}</p>
+                    <p>Region: {{ sale.sales_region }}</p>
+                    <form method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                        <a href="{% url 'sales_data' %}" class="btn btn-secondary">Cancel</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -10,6 +10,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .forms import InventoryForm
 from .models import Inventory
+from .forms import SaleForm, SaleItemForm
+from .models import Sale, SaleItem
 class ChangePasswordForm(PasswordChangeForm):
     pass
 
@@ -105,6 +107,7 @@ def my_account(request):
         'password_form': password_form,
     })
 
+@login_required
 def inventory_view(request):
     inventory_items = Inventory.objects.all()
     form = InventoryForm()
@@ -117,6 +120,7 @@ def inventory_view(request):
 
     return render(request, 'main_app/inventory.html', {'inventory_items': inventory_items, 'form': form})
 
+@login_required
 def update_inventory(request, item_id):
     item = get_object_or_404(Inventory, id=item_id)
     if request.method == 'POST':
@@ -132,3 +136,60 @@ def update_inventory(request, item_id):
         'item': item,
     }
     return render(request, 'main_app/edit_inventory.html', context)
+
+@login_required
+def delete_inventory(request, item_id):
+    item = get_object_or_404(Inventory, id=item_id)
+    item.delete()
+    return redirect('inventory')
+
+@login_required
+def sales_view(request):
+    if request.method == 'POST':
+        sale_form = SaleForm(request.POST)
+        if sale_form.is_valid():
+            print(sale_form.cleaned_data)
+            sale = sale_form.save()
+            return redirect('add_sale_items', sale_id=sale.id)
+    else:
+        sale_form = SaleForm()
+
+    sales = Sale.objects.all()
+    context = {
+        'sale_form': sale_form,
+        'sales': sales,
+    }
+    print(context)
+    return render(request, 'main_app/sales_data.html', context)
+
+@login_required
+def add_sale_items(request, sale_id):
+    sale = get_object_or_404(Sale, id=sale_id)
+    if request.method == 'POST':
+        item_form = SaleItemForm(request.POST)
+        if item_form.is_valid():
+            item = item_form.save(commit=False)
+            item.sale = sale
+            item.save()
+            return redirect('add_sale_items', sale_id=sale.id)
+    else:
+        item_form = SaleItemForm()
+
+    items = SaleItem.objects.filter(sale=sale)
+    context = {
+        'sale': sale,
+        'item_form': item_form,
+        'items': items,
+    }
+    return render(request, 'main_app/add_sale_items.html', context)
+
+@login_required
+def delete_sale(request, sale_id):
+    sale = get_object_or_404(Sale, id=sale_id)
+    if request.method == 'POST':
+        sale.delete()
+        return redirect('sales_data')
+    context = {
+        'sale': sale
+    }
+    return render(request, 'main_app/delete_sale.html', context)

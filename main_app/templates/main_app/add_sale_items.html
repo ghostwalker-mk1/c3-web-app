@@ -1,0 +1,49 @@
+{% extends 'main_app/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Add Items to Sale</h4>
+                </div>
+                <div class="card-body">
+                    <h5>Sale Details</h5>
+                    <p>Customer Name: {{ sale.customer_name }}</p>
+                    <p>Dealership Details: {{ sale.dealership_details }}</p>
+                    <p>Sales Rep: {{ sale.sales_rep_name }}</p>
+                    <p>Region: {{ sale.sales_region }}</p>
+                    <hr>
+                    <h2>Add Item</h2>
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ item_form.product|as_crispy_field }}
+                        {{ item_form.quantity|as_crispy_field }}
+                        <button type="submit" class="btn btn-primary">Add Item</button>
+                    </form>
+                    <hr>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Quantity</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in items %}
+                            <tr>
+                                <td>{{ item.product.name }}</td>
+                                <td>{{ item.quantity }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <a href="{% url 'sales_data' %}" class="btn btn-secondary">Submit</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

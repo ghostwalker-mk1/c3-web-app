@@ -2,6 +2,7 @@ from django import forms
 from .models import UserProfile
 from django.contrib.auth.forms import PasswordChangeForm
 from .models import Inventory
+from .models import Sale, SaleItem
 
 class UserProfileForm(forms.ModelForm):
     class Meta:
@@ -18,3 +19,15 @@ class InventoryForm(forms.ModelForm):
         widgets = {
             'description': forms.Textarea(attrs={'rows': 3}),
         }
+
+class SaleForm(forms.ModelForm):
+    class Meta:
+        model = Sale
+        fields = ['customer_name', 'customer_contact', 'dealership_details', 'sales_rep_name', 'sales_rep_contact', 'sales_region']
+
+class SaleItemForm(forms.ModelForm):
+    product = forms.ModelChoiceField(queryset=Inventory.objects.all())
+
+    class Meta:
+        model = SaleItem
+        fields = ['product', 'quantity']
