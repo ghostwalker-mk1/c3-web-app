@@ -203,6 +203,7 @@ def delete_sale(request, sale_id):
     }
     return render(request, 'main_app/delete_sale.html', context)
 
+@login_required
 def claims_view(request):
     if request.method == 'POST':
         form = ClaimForm(request.POST)
@@ -219,6 +220,7 @@ def claims_view(request):
     }
     return render(request, 'main_app/claims.html', context)
 
+@login_required
 def edit_claim(request, claim_id):
     claim = get_object_or_404(Claim, id=claim_id)
     if request.method == 'POST':
@@ -235,6 +237,7 @@ def edit_claim(request, claim_id):
     }
     return render(request, 'main_app/edit_claim.html', context)
 
+@login_required
 def delete_claim(request, claim_id):
     claim = get_object_or_404(Claim, id=claim_id)
     if request.method == 'POST':
@@ -245,6 +248,7 @@ def delete_claim(request, claim_id):
     }
     return render(request, 'main_app/delete_claim.html', context)
 
+@login_required
 def reporting_dashboard(request):
     # Example Chart
     data = [10, 20, 30, 40, 50]
@@ -263,9 +267,11 @@ def reporting_dashboard(request):
 def products_view(request):
     return render(request, 'main_app/products.html')
 
+@login_required
 def warranty_view(request):
     return render(request, 'main_app/warranties.html')
 
+@login_required
 def inspections_view(request):
     return render(request, 'main_app/inspections.html')
 
