@@ -12,6 +12,13 @@ from .forms import InventoryForm
 from .models import Inventory
 from .forms import SaleForm, SaleItemForm
 from .models import Sale, SaleItem
+from .models import Claim
+from .forms import ClaimForm
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import io
+import urllib, base64
 class ChangePasswordForm(PasswordChangeForm):
     pass
 
@@ -195,3 +202,60 @@ def delete_sale(request, sale_id):
         'sale': sale
     }
     return render(request, 'main_app/delete_sale.html', context)
+
+def claims_view(request):
+    if request.method == 'POST':
+        form = ClaimForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('claims')
+    else:
+        form = ClaimForm()
+
+    claims = Claim.objects.all()
+    context = {
+        'form': form,
+        'claims': claims,
+    }
+    return render(request, 'main_app/claims.html', context)
+
+def edit_claim(request, claim_id):
+    claim = get_object_or_404(Claim, id=claim_id)
+    if request.method == 'POST':
+        form = ClaimForm(request.POST, instance=claim)
+        if form.is_valid():
+            form.save()
+            return redirect('claims')
+    else:
+        form = ClaimForm(instance=claim)
+
+    context = {
+        'form': form,
+        'claim': claim,
+    }
+    return render(request, 'main_app/edit_claim.html', context)
+
+def delete_claim(request, claim_id):
+    claim = get_object_or_404(Claim, id=claim_id)
+    if request.method == 'POST':
+        claim.delete()
+        return redirect('claims')
+    context = {
+        'claim': claim
+    }
+    return render(request, 'main_app/delete_claim.html', context)
+
+def reporting_dashboard(request):
+    # Example Chart
+    data = [10, 20, 30, 40, 50]
+
+    fig, ax = plt.subplots()
+    ax.plot(data)
+
+    buf = io.BytesIO()
+    fig.savefig(buf, format='png')
+    buf.seek(0)
+    image_data = urllib.parse.quote(base64.b64encode(buf.read()))
+
+    context = {'image_data': image_data}
+    return render(request, 'main_app/reporting_dashboard.html', context)

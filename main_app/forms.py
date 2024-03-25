@@ -3,6 +3,7 @@ from .models import UserProfile
 from django.contrib.auth.forms import PasswordChangeForm
 from .models import Inventory
 from .models import Sale, SaleItem
+from .models import Claim
 
 class UserProfileForm(forms.ModelForm):
     class Meta:
@@ -31,3 +32,8 @@ class SaleItemForm(forms.ModelForm):
     class Meta:
         model = SaleItem
         fields = ['product', 'quantity']
+
+class ClaimForm(forms.ModelForm):
+    class Meta:
+        model = Claim
+        fields = ['claim_type', 'status', 'customer_name', 'dealership_details']

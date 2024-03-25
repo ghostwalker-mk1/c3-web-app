@@ -41,3 +41,13 @@ class SaleItem(models.Model):
     sale = models.ForeignKey(Sale, on_delete=models.CASCADE, related_name='items')
     product = models.ForeignKey(Inventory, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1)
+
+class Claim(models.Model):
+    claim_type = models.CharField(max_length=100)
+    status = models.CharField(max_length=100)
+    submission_date = models.DateTimeField(default=timezone.now)
+    customer_name = models.CharField(max_length=100)
+    dealership_details = models.CharField(max_length=200)
+
+    def __str__(self):
+        return f"{self.claim_type} - {self.customer_name}"

@@ -1,0 +1,18 @@
+{% extends 'main_app/base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Reporting Dashboard</h4>
+                </div>
+                <div class="card-body">
+                    <h5>Example Visualization</h5>
+                    <img src="data:image/png;base64,{{ image_data }}">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

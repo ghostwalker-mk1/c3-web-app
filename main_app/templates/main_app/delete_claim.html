@@ -1,0 +1,27 @@
+{% extends 'main_app/base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Delete Claim</h4>
+                </div>
+                <div class="card-body">
+                    <p>Are you sure you want to delete the following claim?</p>
+                    <p>Claim Type: {{ claim.claim_type }}</p>
+                    <p>Status: {{ claim.status }}</p>
+                    <p>Submission Date: {{ claim.submission_date }}</p>
+                    <p>Customer Name: {{ claim.customer_name }}</p>
+                    <p>Dealership Details: {{ claim.dealership_details }}</p>
+                    <form method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                        <a href="{% url 'claims' %}" class="btn btn-secondary">Cancel</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
