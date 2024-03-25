@@ -259,3 +259,15 @@ def reporting_dashboard(request):
 
     context = {'image_data': image_data}
     return render(request, 'main_app/reporting_dashboard.html', context)
+
+def products_view(request):
+    return render(request, 'main_app/products.html')
+
+def warranty_view(request):
+    return render(request, 'main_app/warranties.html')
+
+def inspections_view(request):
+    return render(request, 'main_app/inspections.html')
+
+def about_us_view(request):
+    return render(request, 'main_app/about_us.html')

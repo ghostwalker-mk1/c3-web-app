@@ -10,8 +10,8 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(next_page=reverse_lazy('home')), name='logout'),
     path('contact/', views.contact_view, name='contact'),
     path('my-account/', views.my_account, name='my_account'),
-    path('warranty/', views.my_account, name='warranty'),
-    path('inspections/', views.my_account, name='inspections'),
+    path('warranties/', views.warranty_view, name='warranties'),
+    path('inspections/', views.inspections_view, name='inspections'),
     path('claims/', views.claims_view, name='claims'),
     path('claims/<int:claim_id>/edit/', views.edit_claim, name='edit_claim'),
     path('claims/<int:claim_id>/delete/', views.delete_claim, name='delete_claim'),
@@ -23,5 +23,6 @@ urlpatterns = [
     path('update-inventory/<int:pk>/', views.update_inventory, name='update_inventory'),
     path('inventory/<int:item_id>/update/', views.update_inventory, name='update_inventory'),
     path('inventory/<int:item_id>/delete/', views.delete_inventory, name='delete_inventory'),
-    path('products/', views.my_account, name='products'),
+    path('products/', views.products_view, name='products'),
+    path('about-us/', views.about_us_view, name='about-us'),
 ]
