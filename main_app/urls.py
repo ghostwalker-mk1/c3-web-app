@@ -2,6 +2,8 @@ from django.urls import path
 from . import views
 from django.contrib.auth.views import LogoutView
 from django.urls import reverse_lazy
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('', views.home, name='home'),
@@ -26,3 +28,6 @@ urlpatterns = [
     path('products/', views.products_view, name='products'),
     path('about-us/', views.about_us_view, name='about-us'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

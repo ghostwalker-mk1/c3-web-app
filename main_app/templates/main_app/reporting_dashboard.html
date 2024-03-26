@@ -1,4 +1,5 @@
 {% extends 'main_app/base.html' %}
+{% load static %}
 {% block content %}
 <div class="container mt-5">
     <div class="row">
@@ -8,8 +9,17 @@
                     <h4>Reporting Dashboard</h4>
                 </div>
                 <div class="card-body">
-                    <h5>Example Visualization</h5>
-                    <img src="data:image/png;base64,{{ image_data }}">
+                    <h5>Inventory Levels</h5>
+                    <img src="{{ '/media/' }}inventory_chart.png" alt="Inventory Levels" class="img-fluid">
+                    <hr>
+                    <h5>Claim Counts</h5>
+                    <img src="{{ '/media/' }}claim_chart.png" alt="Claim Counts" class="img-fluid">
+                    <hr>
+                    <h5>Sales Distribution by Region</h5>
+                    <img src="{{ '/media/' }}sales_region_chart.png" alt="Sales Distribution by Region" class="img-fluid">
+                    <hr>
+                    <h5>Claims Distribution by Type</h5>
+                    <img src="{{ '/media/' }}claim_type_chart.png" alt="Claims Distribution by Type" class="img-fluid">
                 </div>
             </div>
         </div>

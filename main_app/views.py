@@ -14,11 +14,14 @@ from .forms import SaleForm, SaleItemForm
 from .models import Sale, SaleItem
 from .models import Claim
 from .forms import ClaimForm
+from django.db import models
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import io
 import urllib, base64
+import os
+
 class ChangePasswordForm(PasswordChangeForm):
     pass
 
@@ -250,19 +253,80 @@ def delete_claim(request, claim_id):
 
 @login_required
 def reporting_dashboard(request):
-    # Example Chart
-    data = [10, 20, 30, 40, 50]
+    # Inventory Levels Bar Chart
+    inventory_data = Inventory.objects.values('name', 'quantity')
+    inventory_names = [item['name'] for item in inventory_data]
+    inventory_quantities = [item['quantity'] for item in inventory_data]
 
     fig, ax = plt.subplots()
-    ax.plot(data)
+    ax.bar(inventory_names, inventory_quantities)
+    ax.set_title('')
+    ax.set_xlabel('Product')
+    ax.set_ylabel('Quantity')
 
+    num_items = len(inventory_names)
+    ax.set_xticks(range(0, num_items, 1))
+    plt.xticks(rotation=45, ha='right')
+
+    inventory_chart_path = os.path.join(settings.MEDIA_ROOT, 'inventory_chart.png')
+    print(inventory_chart_path)
+    fig.savefig(inventory_chart_path, bbox_inches='tight')
+
+    # Claim Counts Bar Chart
+    claim_data = Claim.objects.values('claim_type').annotate(count=models.Count('id'))
+    claim_types = [item['claim_type'] for item in claim_data]
+    claim_counts = [item['count'] for item in claim_data]
+
+    fig, ax = plt.subplots()
+    ax.bar(claim_types, claim_counts)
+    ax.set_title('')
+    ax.set_xlabel('Claim Type')
+    ax.set_ylabel('Count')
+
+    claim_chart_path = os.path.join(settings.MEDIA_ROOT, 'claim_chart.png')
+    fig.savefig(claim_chart_path)
+
+    # Sales Distribution by Region Pie Chart
+    sales_region_data = Sale.objects.values('sales_region').annotate(count=models.Count('id'))
+    region_labels = [item['sales_region'] for item in sales_region_data]
+    region_counts = [item['count'] for item in sales_region_data]
+
+    fig, ax = plt.subplots()
+    ax.pie(region_counts, labels=region_labels, autopct='%1.1f%%')
+    ax.axis('equal')
+    ax.set_title('')
+
+    sales_region_chart_path = os.path.join(settings.MEDIA_ROOT, 'sales_region_chart.png')
+    fig.savefig(sales_region_chart_path)
+
+    # Claims Distribution by Type Pie Chart
+    claim_type_data = Claim.objects.values('claim_type').annotate(count=models.Count('id'))
+    claim_type_labels = [item['claim_type'] for item in claim_type_data]
+    claim_type_counts = [item['count'] for item in claim_type_data]
+
+    fig, ax = plt.subplots()
+    ax.pie(claim_type_counts, labels=claim_type_labels, autopct='%1.1f%%')
+    ax.axis('equal')
+    ax.set_title('')
+
+    claim_type_chart_path = os.path.join(settings.MEDIA_ROOT, 'claim_type_chart.png')
+    fig.savefig(claim_type_chart_path)
+
+    context = {
+        'inventory_chart_path': inventory_chart_path,
+        'claim_chart_path': claim_chart_path,
+        'sales_region_chart_path': sales_region_chart_path,
+        'claim_type_chart_path': claim_type_chart_path,
+        'MEDIA_URL': settings.MEDIA_URL,
+    }
+    return render(request, 'main_app/reporting_dashboard.html', context)
+
+def get_base64_image(fig):
     buf = io.BytesIO()
     fig.savefig(buf, format='png')
     buf.seek(0)
     image_data = urllib.parse.quote(base64.b64encode(buf.read()))
-
-    context = {'image_data': image_data}
-    return render(request, 'main_app/reporting_dashboard.html', context)
+    return image_data
 
 def products_view(request):
     return render(request, 'main_app/products.html')
