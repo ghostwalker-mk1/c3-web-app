@@ -4,6 +4,7 @@ from django.contrib.auth.forms import PasswordChangeForm
 from .models import Inventory
 from .models import Sale, SaleItem
 from .models import Claim
+from .models import Inspection
 
 class UserProfileForm(forms.ModelForm):
     class Meta:
@@ -37,3 +38,8 @@ class ClaimForm(forms.ModelForm):
     class Meta:
         model = Claim
         fields = ['claim_type', 'status', 'customer_name', 'dealership_details']
+
+class InspectionForm(forms.ModelForm):
+    class Meta:
+        model = Inspection
+        fields = ['location', 'inspection_type', 'make', 'model', 'year', 'vin', 'comments']

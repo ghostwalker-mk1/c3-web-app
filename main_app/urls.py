@@ -26,8 +26,12 @@ urlpatterns = [
     path('inventory/<int:item_id>/update/', views.update_inventory, name='update_inventory'),
     path('inventory/<int:item_id>/delete/', views.delete_inventory, name='delete_inventory'),
     path('products/', views.products_view, name='products'),
+    path('products/<int:product_id>/', views.product_detail, name='product_detail'),
     path('about-us/', views.about_us_view, name='about-us'),
 ]
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

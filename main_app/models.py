@@ -51,3 +51,24 @@ class Claim(models.Model):
 
     def __str__(self):
         return f"{self.claim_type} - {self.customer_name}"
+    
+class Product(models.Model):
+    name = models.CharField(max_length=100)
+    description = models.TextField()
+    price = models.DecimalField(max_digits=8, decimal_places=2)
+
+    def __str__(self):
+        return self.name
+    
+class Inspection(models.Model):
+    location = models.CharField(max_length=200)
+    inspection_type = models.CharField(max_length=100)
+    make = models.CharField(max_length=100)
+    model = models.CharField(max_length=100)
+    year = models.PositiveIntegerField()
+    vin = models.CharField(max_length=17, unique=True)
+    comments = models.TextField(blank=True, null=True)
+    timestamp = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return f"{self.inspection_type} - {self.make} {self.model} ({self.vin})"

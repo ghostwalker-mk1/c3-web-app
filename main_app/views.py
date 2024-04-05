@@ -3,17 +3,11 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login
 from django.core.mail import EmailMessage
 from django.conf import settings
-from .forms import UserProfileForm
 from django.contrib.auth.forms import PasswordChangeForm
-from .models import UserProfile
+from .models import UserProfile, Inventory, Sale, SaleItem, Claim, Product, Inspection
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .forms import InventoryForm
-from .models import Inventory
-from .forms import SaleForm, SaleItemForm
-from .models import Sale, SaleItem
-from .models import Claim
-from .forms import ClaimForm
+from .forms import InventoryForm, SaleForm, SaleItemForm, ClaimForm, UserProfileForm, InspectionForm
 from django.db import models
 import matplotlib
 matplotlib.use('Agg')
@@ -57,8 +51,6 @@ def register_view(request):
         form = UserCreationForm()
     return render(request, 'main_app/register.html', {'form': form})
 
-def home_view(request):
-    return render(request, 'main_app/home.html')
 
 def contact_view(request):
     if request.method == 'POST':
@@ -84,7 +76,7 @@ def contact_view(request):
         # Sends the email
         email.send()
 
-        # Renders a success message or redirect to a success page
+        # Renders success message
         return render(request, 'main_app/contact_success.html')
 
     return render(request, 'main_app/contact.html')
@@ -341,3 +333,13 @@ def inspections_view(request):
 
 def about_us_view(request):
     return render(request, 'main_app/about_us.html')
+
+def products_view(request):
+    products = Product.objects.all()
+    context = {'products': products}
+    return render(request, 'main_app/products.html', context)
+
+def product_detail(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    context = {'product': product}
+    return render(request, 'main_app/product_detail.html', context)
