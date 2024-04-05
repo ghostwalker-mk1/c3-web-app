@@ -4,10 +4,10 @@ from django.contrib.auth import authenticate, login
 from django.core.mail import EmailMessage
 from django.conf import settings
 from django.contrib.auth.forms import PasswordChangeForm
-from .models import UserProfile, Inventory, Sale, SaleItem, Claim, Product, Inspection
+from .models import UserProfile, Inventory, Sale, SaleItem, Claim, Product, Inspection, Warranty
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .forms import InventoryForm, SaleForm, SaleItemForm, ClaimForm, UserProfileForm, InspectionForm
+from .forms import InventoryForm, SaleForm, SaleItemForm, ClaimForm, UserProfileForm, InspectionForm, WarrantyForm
 from django.db import models
 import matplotlib
 matplotlib.use('Agg')
@@ -344,6 +344,7 @@ def product_detail(request, product_id):
     context = {'product': product}
     return render(request, 'main_app/product_detail.html', context)
 
+@login_required
 def inspections_view(request):
     if request.method == 'POST':
         form = InspectionForm(request.POST)
@@ -360,6 +361,7 @@ def inspections_view(request):
     }
     return render(request, 'main_app/inspections.html', context)
 
+@login_required
 def edit_inspection(request, inspection_id):
     inspection = get_object_or_404(Inspection, id=inspection_id)
     if request.method == 'POST':
@@ -376,6 +378,7 @@ def edit_inspection(request, inspection_id):
     }
     return render(request, 'main_app/edit_inspection.html', context)
 
+@login_required
 def delete_inspection(request, inspection_id):
     inspection = get_object_or_404(Inspection, id=inspection_id)
     if request.method == 'POST':
@@ -385,3 +388,49 @@ def delete_inspection(request, inspection_id):
         'inspection': inspection
     }
     return render(request, 'main_app/delete_inspection.html', context)
+
+@login_required
+def warranties_view(request):
+    if request.method == 'POST':
+        form = WarrantyForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('warranties')
+    else:
+        form = WarrantyForm()
+
+    warranties = Warranty.objects.all()
+    context = {
+        'form': form,
+        'warranties': warranties,
+    }
+    return render(request, 'main_app/warranties.html', context)
+
+@login_required
+def edit_warranty(request, warranty_id):
+    warranty = get_object_or_404(Warranty, id=warranty_id)
+    if request.method == 'POST':
+        form = WarrantyForm(request.POST, instance=warranty)
+        if form.is_valid():
+            form.save()
+            return redirect('warranties')
+    else:
+        form = WarrantyForm(instance=warranty)
+
+    context = {
+        'form': form,
+        'warranty': warranty,
+    }
+    print(context)
+    return render(request, 'main_app/edit_warranty.html', context)
+
+@login_required
+def delete_warranty(request, warranty_id):
+    warranty = get_object_or_404(Warranty, id=warranty_id)
+    if request.method == 'POST':
+        warranty.delete()
+        return redirect('warranties')
+    context = {
+        'warranty': warranty
+    }
+    return render(request, 'main_app/delete_warranty.html', context)

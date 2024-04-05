@@ -1,10 +1,6 @@
 from django import forms
-from .models import UserProfile
 from django.contrib.auth.forms import PasswordChangeForm
-from .models import Inventory
-from .models import Sale, SaleItem
-from .models import Claim
-from .models import Inspection
+from .models import Inventory, Warranty, Sale, SaleItem, Claim, Inspection, UserProfile
 
 class UserProfileForm(forms.ModelForm):
     class Meta:
@@ -43,3 +39,14 @@ class InspectionForm(forms.ModelForm):
     class Meta:
         model = Inspection
         fields = ['location', 'inspection_type', 'make', 'model', 'year', 'vin', 'comments']
+        widgets = {
+            'comments': forms.Textarea(attrs={'rows': 3}),
+        }
+
+class WarrantyForm(forms.ModelForm):
+    class Meta:
+        model = Warranty
+        fields = ['product_name', 'serial_number', 'purchase_date', 'expiration_date', 'comments']
+        widgets = {
+            'comments': forms.Textarea(attrs={'rows': 3}),
+        }

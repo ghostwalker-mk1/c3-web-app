@@ -72,3 +72,14 @@ class Inspection(models.Model):
 
     def __str__(self):
         return f"{self.inspection_type} - {self.make} {self.model} ({self.vin})"
+    
+class Warranty(models.Model):
+    product_name = models.CharField(max_length=100)
+    serial_number = models.CharField(max_length=50, unique=True)
+    purchase_date = models.DateField()
+    expiration_date = models.DateField()
+    comments = models.TextField(blank=True, null=True)
+    timestamp = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return f"{self.product_name} - {self.customer_name}"
