@@ -1,6 +1,53 @@
 {% extends 'main_app/base.html' %}
+{% load static %}
 {% block content %}
-
-<h1 class="display-4">This is a placeholder page for about us.</h1>
-
+<style>
+    .header {
+        padding-top: 50px;
+    }
+    .content-container {
+        display: flex;
+        align-items: flex-start;
+    }
+    .text-container {
+        flex: 1;
+        padding-right: 20px;
+    }
+    .image-container {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding-bottom: 20px;
+    }
+    .image-container img {
+        max-width: 400px;
+        margin-bottom: 20px;
+    }
+    .bottom-images {
+        display: flex;
+        justify-content: center;
+        gap: 235px;
+    }
+    .bottom-images img {
+        max-width: 350px;
+    }
+</style>
+<div class="container">
+    <h1 class="header">Consumer Car Care</h1>
+    <div class="content-container">
+        <div class="text-container">
+            <p>At Consumer Car Care (C3), we are committed to revolutionizing the automotive industry through innovative solutions and a customer-centric approach.</p>
+            <p>Established in Mississauga, Ontario, C3 is a leading provider of add-on products and services for new car purchases. We specialize in offering aftermarket enhancements tailored to personalize your recently acquired vehicle, ensuring a seamless your unique style and experiences.</p>
+            <p>With our headquarters located in Mississauga and a regional office in Lachine, Quebec, we cater to markets across Ontario and Quebec, offering a range of products including rust protection, fabric protection, paint protection, VIN etching, and extended warranties. Our business model involves collaborating with dealerships, where we negotiate, capture sales, and enjoy profit-sharing partnerships. Through this partnership, both parties share profits, ensuring mutual success and growth.</p>
+            <p>Driven by our vision, we continually strive to enhance the customer experience, delivering high-quality solutions that meet the evolving needs of the automotive industry. Join us on our journey as we redefine car care and set new standards of excellence.</p>
+        </div>
+        <div class="image-container">
+            <img src="{% static 'main_app/images/guy1.jpg' %}" alt="Person Image">
+        </div>
+    </div>
+    <div class="bottom-images">
+        <img src="{% static 'main_app/images/dash.jpg' %}" alt="Dash Image">
+        <img src="{% static 'main_app/images/car.jpg' %}" alt="Car Image">
+    </div>
+</div>
 {% endblock %}

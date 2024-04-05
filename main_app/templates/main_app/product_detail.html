@@ -1,6 +1,7 @@
 {% extends 'main_app/base.html' %}
-
+{% load static %}
 {% block content %}
+
 <div class="container mt-5">
     <div class="row">
         <div class="col-md-12">
@@ -9,10 +10,14 @@
                     <h4>Product Details</h4>
                 </div>
                 <div class="card-body">
+                    {% if product.image %}
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}" class="img-fluid" width="600" height="400">
+                    {% endif %}
                     <h5>{{ product.name }}</h5>
                     <p>{{ product.description }}</p>
                     <p>Price: ${{ product.price }}</p>
                 </div>
+            </div>
         </div>
     </div>
 </div>
