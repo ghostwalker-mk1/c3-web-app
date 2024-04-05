@@ -343,3 +343,45 @@ def product_detail(request, product_id):
     product = get_object_or_404(Product, id=product_id)
     context = {'product': product}
     return render(request, 'main_app/product_detail.html', context)
+
+def inspections_view(request):
+    if request.method == 'POST':
+        form = InspectionForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('inspections')
+    else:
+        form = InspectionForm()
+
+    inspections = Inspection.objects.all()
+    context = {
+        'form': form,
+        'inspections': inspections,
+    }
+    return render(request, 'main_app/inspections.html', context)
+
+def edit_inspection(request, inspection_id):
+    inspection = get_object_or_404(Inspection, id=inspection_id)
+    if request.method == 'POST':
+        form = InspectionForm(request.POST, instance=inspection)
+        if form.is_valid():
+            form.save()
+            return redirect('inspections')
+    else:
+        form = InspectionForm(instance=inspection)
+
+    context = {
+        'form': form,
+        'inspection': inspection,
+    }
+    return render(request, 'main_app/edit_inspection.html', context)
+
+def delete_inspection(request, inspection_id):
+    inspection = get_object_or_404(Inspection, id=inspection_id)
+    if request.method == 'POST':
+        inspection.delete()
+        return redirect('inspections')
+    context = {
+        'inspection': inspection
+    }
+    return render(request, 'main_app/delete_inspection.html', context)
